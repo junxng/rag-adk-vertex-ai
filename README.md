@@ -214,6 +214,14 @@ The engine supports various document types, including:
 - [Google Agent Development Kit (ADK)](https://google.github.io/adk-docs/)
 - [Vertex AI RAG Engine](https://cloud.google.com/vertex-ai/generative-ai/docs/rag-engine/rag-overview)
 - [Google Cloud Storage](https://cloud.google.com/storage)
+- Whitepaper:
+    + [Prompt Engineering](https://www.kaggle.com/whitepaper-prompt-engineering)
+    + [Foundational LLMs and Text Generation](https://www.kaggle.com/whitepaper-foundational-llm-and-text-generation)
+    + [Agents](https://www.kaggle.com/whitepaper-agents)
+    + [Agents Companion](https://www.kaggle.com/whitepaper-agent-companion)
+    + [Embeddings & Vector Stores](https://www.kaggle.com/whitepaper-embeddings-and-vector-stores)
+    + [Operationalizing GenAI on Vertex AI using MLOps](https://www.kaggle.com/whitepaper-operationalizing-generative-ai-on-vertex-ai-using-mlops)
+    + [Solving Domain-Specific Problems using LLMs](https://www.kaggle.com/whitepaper-solving-domains-specific-problems-using-llms)
 
 ## Example Workflow
 
@@ -224,47 +232,49 @@ Below is a complete example workflow showing how to set up the entire RAG enviro
 ```text
 Create the following 7 Google Cloud Storage buckets for my project, using the default settings (location: US, storage class: STANDARD) for all of them. Do not ask for confirmation for each bucket.
 
-1. adk-foundation-llm-dungnq49
-2. adk-prompt-engineering-dungnq49
-3. adk-embedding-vector-stores-dungnq49
-4. adk-agents-llm-dungnq49
-5. adk-agents-companion-dungnq49
-6. adk-solving-domain-problem-using-llms-dungnq49
-7. adk-operationalizing-genai-vertex-ai-dungnq49
+1. adk-prompt-engineering-dungnq49
+2. adk-foundational-llm-and-text-generation-dungnq49
+3. adk-agents-dungnq49
+4. adk-agent-companion-dungnq49
+5. adk-embedding-and-vector-stores-dungnq49
+6. adk-operationalizing-generative-ai-on-vertex-ai-using-mlops-dungnq49
+7. adk-solving-domains-specific-problems-using-llms-dungnq49
 ```
 
 ### 2. Upload PDF Files to GCS Buckets
 
 ```text
-Upload the file "promptengineering.pdf" to the GCS bucket gs://adk-prompt-engineering-dungnq49/ and use "promptengineering.pdf" as the destination blob name. Do not ask for confirmation.
+Upload the file "prompt-engineering.pdf" to the GCS bucket gs://adk-prompt-engineering-dungnq49/ and use "prompt-engineering.pdf" as the destination blob name. Do not ask for confirmation.
 
-Upload the file "foundational-large-language-models-text-generation.pdf" to the GCS bucket gs://adk-foundation-llm-dungnq49/ and use "foundational-large-language-models-text-generation.pdf" as the destination blob name. Do not ask for confirmation.
+Upload the file "foundational-llm-and-text-generation.pdf" to the GCS bucket gs://adk-foundational-llm-and-text-generation-dungnq49/ and use "foundational-llm-and-text-generation.pdf" as the destination blob name. Do not ask for confirmation.
 
-Upload the file "agents.pdf" to the GCS bucket gs://adk-agents-llm-dungnq49/ and use "agents.pdf" as the destination blob name. Do not ask for confirmation.
+Upload the file "agents.pdf" to the GCS bucket gs://adk-agents-dungnq49/ and use "agents.pdf" as the destination blob name. Do not ask for confirmation.
 
-Upload the file "agents-companion.pdf" to the GCS bucket gs://adk-agents-companion-dungnq49/ and use "agents-companion.pdf" as the destination blob name. Do not ask for confirmation.
+Upload the file "agent-companion.pdf" to the GCS bucket gs://adk-agent-companion-dungnq49/ and use "agent-companion.pdf" as the destination blob name. Do not ask for confirmation.
 
-Upload the file "emebddings-vector-stores.pdf" to the GCS bucket gs://adk-embedding-vector-stores-dungnq49/ and use "emebddings-vector-stores.pdf" as the destination blob name. Do not ask for confirmation.
+Upload the file "embedding-and-vector-stores.pdf" to the GCS bucket gs://adk-embedding-and-vector-stores-dungnq49/ and use "embedding-and-vector-stores.pdf" as the destination blob name. Do not ask for confirmation.
 
-Upload the file "operationalizing-generative-ai-on-vertex-ai.pdf" to the GCS bucket gs://adk-operationalizing-genai-vertex-ai-dungnq49/ and use "operationalizing-generative-ai-on-vertex-ai.pdf" as the destination blob name. Do not ask for confirmation.
+Upload the file "operationalizing-generative-ai-on-vertex-ai-using-mlops.pdf" to the GCS bucket gs://adk-operationalizing-generative-ai-on-vertex-ai-using-mlops-dungnq49/ and use "operationalizing-generative-ai-on-vertex-ai-using-mlops.pdf" as the destination blob name. Do not ask for confirmation.
 
-Upload the file "solving-domain-specific-problems-using-llms.pdf" to the GCS bucket gs://adk-solving-domain-problem-using-llms-dungnq49/ and use "solving-domain-specific-problems-using-llms.pdf" as the destination blob name. Do not ask for confirmation.
+Upload the file "solving-domains-specific-problems-using-llms.pdf" to the GCS bucket gs://adk-solving-domains-specific-problems-using-llms-dungnq49/ and use "solving-domains-specific-problems-using-llms.pdf" as the destination blob name. Do not ask for confirmation.
 ```
 
 ### 3. Create RAG Corpora and Import Files
 
 ```text
-Create a RAG corpus named "adk-agents-companion" with description of rag as "adk-agents-companion" and import the gs://adk-agents-companion-dungnq49/agents-companion.pdf into RAG
+Create a RAG corpus named "adk-prompt-engineering" with description of rag as "adk-prompt-engineering" and import the gs://adk-prompt-engineering-dungnq49/prompt-engineering.pdf into RAG corpus.
 
-Create a RAG corpus named "adk-agents-llm" with description "adk-agents-llm" and import the file gs://adk-agents-llm-dungnq49/agents.pdf into the RAG corpus.
+Create a RAG corpus named "adk-foundational-llm-and-text-generation" with description "adk-foundational-llm-and-text-generation" and import the file gs://adk-foundational-llm-and-text-generation-dungnq49/foundational-llm-and-text-generation.pdf into the RAG corpus.
 
-Create a RAG corpus named "adk-embedding-vector-stores" with description "adk-embedding-vector-stores" and import the file gs://adk-embedding-vector-stores-dungnq49/emebddings-vector-stores.pdf into the RAG corpus.
+Create a RAG corpus named "adk-agents" with description "adk-agents" and import the file gs://adk-agents-dungnq49/agents.pdf into the RAG corpus.
 
-Create a RAG corpus named "adk-foundation-llm" with description "adk-foundation-llm" and import the file gs://adk-foundation-llm-dungnq49/foundational-large-language-models-text-generation.pdf into the RAG corpus.
+Create a RAG corpus named "adk-agent-companion" with description of rag as "adk-agent-companion" and import the gs://adk-agent-companion-dungnq49/agent-companion.pdf into RAG corpus.
 
-Create a RAG corpus named "adk-operationalizing-genai-vertex-ai" with description "adk-operationalizing-genai-vertex-ai" and import the file gs://adk-operationalizing-genai-vertex-ai-dungnq49/operationalizing-generative-ai-on-vertex-ai.pdf into the RAG corpus.
+Create a RAG corpus named "adk-embedding-and-vector-stores" with description "adk-embedding-and-vector-stores" and import the file gs://adk-embedding-and-vector-stores-dungnq49/embedding-and-vector-stores.pdf into the RAG corpus.
 
-Create a RAG corpus named "adk-solving-domain-problem-using-llms" with description "adk-solving-domain-problem-using-llms" and import the file gs://adk-solving-domain-problem-using-llms-dungnq49/solving-domain-specific-problems-using-llms.pdf into the RAG corpus.
+Create a RAG corpus named "adk-operationalizing-generative-ai-on-vertex-ai-using-mlops" with description "adk-operationalizing-generative-ai-on-vertex-ai-using-mlops" and import the file gs://adk-operationalizing-generative-ai-on-vertex-ai-using-mlops-dungnq49/operationalizing-generative-ai-on-vertex-ai-using-mlops.pdf into the RAG corpus.
+
+Create a RAG corpus named "adk-solving-domains-specific-problems-using-llms" with description "adk-solving-domains-specific-problems-using-llms" and import the file gs://adk-solving-domains-specific-problems-using-llms-dungnq49/solving-domains-specific-problems-using-llms.pdf into the RAG corpus.
 ```
 
 ### 4. Query Across All Corpora
@@ -275,13 +285,15 @@ What is Chain of Thought (CoT)?
 What is Tree of Thoughts (ToT)?
 What is ReAct (reason & act)?
 
+# Quesions about Foundation LLM
+
+# Questions about Agents & Agents Companion
+What is Agent Lifecycle?
+
 # Questions about Embeddings & Vector Stores
 What are Types of embeddings?
 What is Vector search?
 What is Vector databases?
-
-# Questions about Agents
-What is Agent Lifecycle?
 
 # Questions about MLOps & Operationalization
 How do multiple teams collaborate to operationalize GenAI models?
