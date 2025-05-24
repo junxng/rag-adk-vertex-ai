@@ -237,7 +237,7 @@ Create the following 7 Google Cloud Storage buckets for my project, using the de
 3. adk-agents-dungnq49
 4. adk-agent-companion-dungnq49
 5. adk-embedding-and-vector-stores-dungnq49
-6. adk-operationalizing-generative-ai-on-vertex-ai-using-mlops-dungnq49
+6. adk-operationalizing-generative-ai-on-vertex-ai-dungnq49
 7. adk-solving-domains-specific-problems-using-llms-dungnq49
 ```
 
@@ -254,7 +254,7 @@ Upload the file "agent-companion.pdf" to the GCS bucket gs://adk-agent-companion
 
 Upload the file "embedding-and-vector-stores.pdf" to the GCS bucket gs://adk-embedding-and-vector-stores-dungnq49/ and use "embedding-and-vector-stores.pdf" as the destination blob name. Do not ask for confirmation.
 
-Upload the file "operationalizing-generative-ai-on-vertex-ai-using-mlops.pdf" to the GCS bucket gs://adk-operationalizing-generative-ai-on-vertex-ai-using-mlops-dungnq49/ and use "operationalizing-generative-ai-on-vertex-ai-using-mlops.pdf" as the destination blob name. Do not ask for confirmation.
+Upload the file "operationalizing-generative-ai-on-vertex-ai.pdf" to the GCS bucket gs://adk-operationalizing-generative-ai-on-vertex-ai-dungnq49/ and use "operationalizing-generative-ai-on-vertex-ai.pdf" as the destination blob name. Do not ask for confirmation.
 
 Upload the file "solving-domains-specific-problems-using-llms.pdf" to the GCS bucket gs://adk-solving-domains-specific-problems-using-llms-dungnq49/ and use "solving-domains-specific-problems-using-llms.pdf" as the destination blob name. Do not ask for confirmation.
 ```
@@ -272,7 +272,7 @@ Create a RAG corpus named "adk-agent-companion" with description of rag as "adk-
 
 Create a RAG corpus named "adk-embedding-and-vector-stores" with description "adk-embedding-and-vector-stores" and import the file gs://adk-embedding-and-vector-stores-dungnq49/embedding-and-vector-stores.pdf into the RAG corpus.
 
-Create a RAG corpus named "adk-operationalizing-generative-ai-on-vertex-ai-using-mlops" with description "adk-operationalizing-generative-ai-on-vertex-ai-using-mlops" and import the file gs://adk-operationalizing-generative-ai-on-vertex-ai-using-mlops-dungnq49/operationalizing-generative-ai-on-vertex-ai-using-mlops.pdf into the RAG corpus.
+Create a RAG corpus named "adk-operationalizing-generative-ai-on-vertex-ai" with description "adk-operationalizing-generative-ai-on-vertex-ai" and import the file gs://adk-operationalizing-generative-ai-on-vertex-ai-dungnq49/operationalizing-generative-ai-on-vertex-ai.pdf into the RAG corpus.
 
 Create a RAG corpus named "adk-solving-domains-specific-problems-using-llms" with description "adk-solving-domains-specific-problems-using-llms" and import the file gs://adk-solving-domains-specific-problems-using-llms-dungnq49/solving-domains-specific-problems-using-llms.pdf into the RAG corpus.
 ```
