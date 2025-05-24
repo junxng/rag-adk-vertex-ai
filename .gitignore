@@ -50,7 +50,7 @@ coverage.xml
 .pytest_cache/
 
 # IDE specific files
-.idx/
+.idx/dev.nix
 .idea/
 .vscode/
 *.sublime-project
