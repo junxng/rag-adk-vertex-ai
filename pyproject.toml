@@ -1,0 +1,17 @@
+[project]
+name = "RAG-ADK-Vertex-AI"
+version = "0.0.1"
+description = "Build a RAG Agent using Google ADK and Vertex AI RAG Engine"
+authors = [
+    {name = "Juhan Nguyen", email = "dungthcsnt2014@gmail.com"},
+]
+dependencies = [
+    "google-adk",
+    "google-cloud-aiplatform[adk,agent-engines]",
+    "google-cloud-storage",
+    "pytest",
+]
+requires-python = ">=3.11"
+
+[tool.uv]
+package = false

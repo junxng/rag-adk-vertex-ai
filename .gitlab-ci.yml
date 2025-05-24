@@ -1,0 +1,80 @@
+variables:
+  # Default service name for Cloud Run. Change if your service has a different name.
+  SERVICE_NAME: "rag-adk-vertex-ai"
+  UV_VERSION: 0.7.7
+  PYTHON_VERSION: 3.11
+  BASE_LAYER: bookworm-slim
+  # These GCP variables MUST be configured in your GitLab project's CI/CD settings:
+  # GCP_PROJECT_ID: Your Google Cloud Project ID.
+  # GCP_REGION: The GCP region for your Cloud Run service (e.g., us-central1).
+  # GCP_SA_KEY_BASE64: Your Google Cloud service account key JSON file, base64 encoded.
+  #   - To generate: cat /path/to/your/service-account-key.json | base64 -w 0
+  #   - The service account needs roles like "Cloud Run Admin", "Storage Object Viewer",
+  #     and "Service Account User" (if Cloud Run service runs as this SA).
+  UV_LINK_MODE: copy
+
+# Use an appropriate Python image that matches your project's requirements
+image: ghcr.io/astral-sh/uv:$UV_VERSION-python$PYTHON_VERSION-$BASE_LAYER
+
+# This section runs before each job
+before_script:
+  - uv venv
+  - source .venv/bin/activate
+  - uv sync
+
+stages:
+  - build
+  - test
+  - deploy
+
+build_job:
+  stage: build
+  script:
+    - echo "Python version: $(python --version)"
+    - echo "uv version: $(uv --version)"
+    - echo "Listing installed packages:"
+    - uv pip list
+    - echo "Build checks (e.g., linting, code analysis) can be added here."
+
+test_job:
+  stage: test
+  script:
+    - echo "Running tests..."
+    # Add any pytest specific flags if needed, e.g., -v for verbose
+    - pytest
+    # Check if the ADK command-line tool is accessible and works
+    - adk --version
+    # Add your actual test commands here. For example:
+    - adk run rag --help
+    - pytest
+    - echo "No comprehensive tests defined yet. Please add your test suite commands."
+
+deploy_to_cloud_run:
+  stage: deploy
+  image: google/cloud-sdk:latest
+  script:
+    - echo "Deploying application to Google Cloud Run..."
+
+    # Authenticate to Google Cloud
+    # GCP_SA_KEY_BASE64 is a GitLab CI/CD variable containing the base64 encoded service account key
+    - echo $GCP_SA_KEY_BASE64 | base64 -d > /tmp/gcp-key.json
+    - gcloud auth activate-service-account --key-file=/tmp/gcp-key.json
+    - gcloud config set project $GCP_PROJECT_ID
+
+    # Deploy to Cloud Run from source.
+    # This command will use Google Cloud Build to build a container for your application.
+    # Ensure your application is configured to listen on the port specified by the PORT environment variable (Cloud Run provides this, usually 8080).
+    # The `adk web` command likely starts a web server; ensure it respects the PORT variable.
+    - gcloud run deploy $SERVICE_NAME \
+        --source . \
+        --region $GCP_REGION \
+        --platform managed \
+        --allow-unauthenticated \
+        --project=$GCP_PROJECT_ID
+        # Add other flags as needed: e.g., --memory, --cpu, --set-env-vars
+        # For private services, use --no-allow-unauthenticated and configure IAM for invokers.
+
+    - echo "Deployment to Cloud Run initiated."
+  rules:
+    # This rule deploys only when changes are pushed/merged to the default branch (e.g., main, master)
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH

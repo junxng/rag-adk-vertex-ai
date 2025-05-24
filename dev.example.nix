@@ -1,0 +1,80 @@
+# To learn more about how to use Nix to configure your environment
+# see: https://firebase.google.com/docs/studio/customize-workspace
+{ pkgs, ... }: {
+  # Which nixpkgs channel to use.
+  channel = "unstable"; # or "stable-24.05"
+  # Use https://search.nixos.org/packages to find packages
+  packages = [
+    # pkgs.go
+    pkgs.python311
+    pkgs.python311Packages.pip
+    # pkgs.nodejs_20
+    # pkgs.nodePackages.nodemon
+    pkgs.uv
+  ];
+  # Sets environment variables in the workspace
+  env = {
+    GOOGLE_CLOUD_PROJECT="your-project-id";
+    GOOGLE_CLOUD_LOCATION="us-central1";
+    GOOGLE_API_KEY="your_api_key_here";
+    # Ensure this is commented out if using ADC login
+    # GOOGLE_APPLICATION_CREDENTIALS="/path/to/your/service-account-key.json";
+  };
+  idx = {
+    # Search for the extensions you want on https://open-vsx.org/ and use "publisher.id"
+    extensions = [
+      # "vscodevim.vim"
+    ];
+    # Enable previews
+    previews = {
+      enable = true;
+      previews = {
+        # web = {
+        #   # Example: run "npm run dev" with PORT set to IDX's defined port for previews,
+        #   # and show it in IDX's web preview panel
+        #   command = ["npm" "run" "dev"];
+        #   manager = "web";
+        #   env = {
+        #     # Environment variables to set for your server
+        #     PORT = "$PORT";
+        #   };
+        # };
+      };
+    };
+    # Workspace lifecycle hooks
+    workspace = {
+      # Runs when a workspace is first created
+      onCreate = {
+        setup-venv = "uv venv && source .venv/bin/activate && uv sync";
+        enable-services = ''
+          gcloud services enable aiplatform.googleapis.com --project=$GOOGLE_CLOUD_PROJECT
+          gcloud services enable storage.googleapis.com --project=$GOOGLE_CLOUD_PROJECT
+        '';
+        set-iam-permissions = ''
+          gcloud projects add-iam-policy-binding $GOOGLE_CLOUD_PROJECT \
+            --member="user:YOUR_EMAIL@domain.com" \
+            --role="roles/aiplatform.user"
+          gcloud projects add-iam-policy-binding $GOOGLE_CLOUD_PROJECT \
+            --member="user:YOUR_EMAIL@domain.com" \
+            --role="roles/storage.objectAdmin"
+        '';
+        login-auth = ''
+          gcloud auth application-default login
+        '';
+        # Open editors for the following files by default, if they exist:
+        default.openFiles = [ ".idx/dev-example.nix" "README.md" ];
+      };
+      # Runs when the workspace is (re)started
+      onStart = {
+        # Example: start a background task to watch and re-build backend code
+        # watch-backend = "npm run watch-backend";
+        # Consider sourcing the venv activate script here if needed for every start
+        activate-venv = "source .venv/bin/activate";
+        # Run the agent directly in the terminal
+        # terminal-exec = "adk run rag";
+        # or use ADK web interface
+        # gui-exec = "adk web";
+      };
+    };
+  };
+}
